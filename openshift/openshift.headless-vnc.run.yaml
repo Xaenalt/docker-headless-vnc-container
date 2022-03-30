@@ -31,21 +31,21 @@ objects:
       targetPort: 5901
     selector:
       deploymentConfig: ${APPLICATION_NAME}
-- apiVersion: v1
-  id: ${APPLICATION_NAME}-http
-  kind: Route
-  metadata:
-    annotations:
-      description: Route for vnc's http service.
-    labels:
-      application: ${APPLICATION_NAME}
-    name: ${APPLICATION_NAME}
-  spec:
-    host: ${HOSTNAME_HTTP}
-    to:
-      name: ${APPLICATION_NAME}
-    port:
-      targetPort: http-port-tcp
+#- apiVersion: v1
+#  id: ${APPLICATION_NAME}-http
+#  kind: Route
+#  metadata:
+#    annotations:
+#      description: Route for vnc's http service.
+#    labels:
+#      application: ${APPLICATION_NAME}
+#    name: ${APPLICATION_NAME}
+#  spec:
+#    host: ${HOSTNAME_HTTP}
+#    to:
+#      name: ${APPLICATION_NAME}
+#    port:
+#      targetPort: http-port-tcp
 - apiVersion: v1
   kind: ImageStream
   metadata:
@@ -109,10 +109,10 @@ parameters:
   name: APPLICATION_NAME
   required: true
   value: headless-vnc
-- description: 'Custom hostname for http service route.  Leave blank for default hostname,
-    e.g.: <application-name>-<project>.<default-domain-suffix>'
-  name: HOSTNAME_HTTP
+#- description: 'Custom hostname for http service route.  Leave blank for default hostname,
+#    e.g.: <application-name>-<project>.<default-domain-suffix>'
+#  name: HOSTNAME_HTTP
 - description: Headless vnc image
   name: IMAGE
   required: true
-  value: consol/centos-xfce-vnc:dev
+  value: image-registry.openshift-image-registry.svc:5000/default/ubi-xfce-image

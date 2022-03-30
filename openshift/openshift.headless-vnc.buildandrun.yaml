@@ -31,21 +31,21 @@ objects:
       targetPort: 5901
     selector:
       deploymentConfig: ${APPLICATION_NAME}
-- apiVersion: v1
-  id: ${APPLICATION_NAME}-http
-  kind: Route
-  metadata:
-    annotations:
-      description: Route for vnc's http service.
-    labels:
-      application: ${APPLICATION_NAME}
-    name: ${APPLICATION_NAME}
-  spec:
-    host: ${HOSTNAME_HTTP}
-    to:
-      name: ${APPLICATION_NAME}
-    port:
-      targetPort: http-port-tcp
+# - apiVersion: v1
+#   id: ${APPLICATION_NAME}-http
+#   kind: Route
+#   metadata:
+#     annotations:
+#       description: Route for vnc's http service.
+#     labels:
+#       application: ${APPLICATION_NAME}
+#     name: ${APPLICATION_NAME}
+#   spec:
+#     host: ${HOSTNAME_HTTP}
+#     to:
+#       name: ${APPLICATION_NAME}
+#     port:
+#       targetPort: http-port-tcp
 - apiVersion: v1
   kind: ImageStream
   metadata:
@@ -132,6 +132,10 @@ objects:
             periodSeconds: 10
             successThreshold: 1
             failureThreshold: 3
+          resources:
+            requests:
+              memory: 8Gi
+              cpu: 6
     triggers:
     - imageChangeParams:
         automatic: true
@@ -147,19 +151,19 @@ parameters:
   name: APPLICATION_NAME
   required: true
   value: headless-vnc
-- description: 'Custom hostname for http service route.  Leave blank for default hostname,
-    e.g.: <application-name>-<project>.<default-domain-suffix>'
-  name: HOSTNAME_HTTP
+# - description: 'Custom hostname for http service route.  Leave blank for default hostname,
+#     e.g.: <application-name>-<project>.<default-domain-suffix>'
+#   name: HOSTNAME_HTTP
 - description: Git source URI for application
   name: SOURCE_REPOSITORY_URL
   required: true
-  value: https://github.com/ConSol/docker-headless-vnc-container.git
+  value: https://github.com/Xaenalt/docker-headless-vnc-container.git
 - description: Git branch/tag reference
   name: SOURCE_REPOSITORY_REF
   value: "master"
 - description: Name of the Dockerfile for example Dockerfile.ubuntu.xfce.vnc, Dockerfile.centos.icewm.vnc, Dockerfile.ubuntu.icewm.vnc or Dockerfile.centos.xfce.vnc
   name: SOURCE_DOCKERFILE
-  value: Dockerfile.ubuntu.xfce.vnc
+  value: Dockerfile.ubi.xfce.vnc
 - description: GitHub trigger secret
   from: '[a-zA-Z0-9]{8}'
   generate: expression

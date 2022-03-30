@@ -4,11 +4,9 @@ set -e
 
 echo "Install Xfce4 UI components and disable xfce-polkit"
 
-yum --enablerepo=epel -y -x gnome-keyring --skip-broken groups install "Xfce"
-yum -y groups install "Fonts"
-yum -y install hostname
+yum -y --enablerepo=epel -x gnome-keyring --skip-broken groupinstall "Xfce"
+yum -y --enablerepo=epel groupinstall "Fonts"
 rpm -e --nodeps systemd-udev
-yum erase -y *power* *screensaver*
+yum erase -y *power* *screensaver* --skip-broken
 yum clean all
-rm /etc/xdg/autostart/xfce-polkit*
 /bin/dbus-uuidgen > /etc/machine-id
